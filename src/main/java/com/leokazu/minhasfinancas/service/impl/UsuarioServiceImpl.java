@@ -1,5 +1,6 @@
 package com.leokazu.minhasfinancas.service.impl;
 
+import com.leokazu.minhasfinancas.exception.RegraNegocioException;
 import com.leokazu.minhasfinancas.model.entity.Usuario;
 import com.leokazu.minhasfinancas.model.repository.UsuarioRepository;
 import com.leokazu.minhasfinancas.service.UsuarioService;
@@ -28,6 +29,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void validarEmail(String email) {
-        return;
+        boolean existe = usuarioRepository.existsByEmail(email);
+        if(existe){
+            throw new RegraNegocioException("Já existe um usuario cadastrado neste email ");
+        }
     }
 }
